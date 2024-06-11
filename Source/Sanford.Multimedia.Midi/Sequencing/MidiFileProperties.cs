@@ -106,12 +106,6 @@ namespace Sanford.Multimedia.Midi
             Format = (int)ReadProperty(strm);
             TrackCount = (int)ReadProperty(strm);
             Division = (int)ReadProperty(strm);
-
-            #region Invariant
-
-            AssertValid();
-
-            #endregion
         }
 
         private void FindHeader(Stream stream)
@@ -229,25 +223,6 @@ namespace Sanford.Multimedia.Midi
             return result;
         }
 
-        [Conditional("DEBUG")]
-        private void AssertValid()
-        {
-            if(trackCount > 1)
-            {
-                Debug.Assert(Format == 1 || Format == 2);
-            }
-
-            if(IsSmpte(Division))
-            {
-                Debug.Assert(SequenceType == SequenceType.Smpte);
-            }
-            else
-            {
-                Debug.Assert(SequenceType == SequenceType.Ppqn);
-                Debug.Assert(Division >= PpqnClock.PpqnMinValue);
-            }
-        }
-
         public int Format
         {
             get
@@ -273,11 +248,6 @@ namespace Sanford.Multimedia.Midi
 
                 format = value;
 
-                #region Invariant
-
-                AssertValid();
-
-                #endregion
             }
         }
 
@@ -305,12 +275,6 @@ namespace Sanford.Multimedia.Midi
                 #endregion
 
                 trackCount = value;
-
-                #region Invariant
-
-                AssertValid();
-
-                #endregion
             }
         }
 
@@ -357,12 +321,6 @@ namespace Sanford.Multimedia.Midi
                 }
 
                 division = value;
-
-                #region Invariant
-
-                AssertValid();
-
-                #endregion
             }
         }
 
